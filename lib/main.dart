@@ -186,7 +186,32 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.read<ToDoAddProvider>().remove(todoId, value.todoList[index].name, value.todoList[index].isChecked, value.todoList[index].createdAt);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Alert'),
+                                  content:
+                                      const Text('Do you want remove?.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                      child: Text('Confirm'),
+                                      onPressed: () {
+                                        context.read<ToDoAddProvider>().remove(todoId, value.todoList[index].name, value.todoList[index].isChecked, value.todoList[index].createdAt);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            //context.read<ToDoAddProvider>().remove(todoId, value.todoList[index].name, value.todoList[index].isChecked, value.todoList[index].createdAt);
                           },
                           child: const Icon(
                             Icons.delete_forever_outlined,
